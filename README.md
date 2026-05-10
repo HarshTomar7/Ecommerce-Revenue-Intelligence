@@ -111,7 +111,8 @@ Before analysis, the raw dataset was cleaned in Excel:
 
 ### 🔹 Page 1 — Business Performance
 
-![Page 1](Page_1.png)
+<img width="1282" height="674" alt="Page 1" src="https://github.com/user-attachments/assets/bd383244-603c-4307-acfd-645e5aec3eef" />
+
 
 - Total Revenue, Orders, Customers
 - Monthly Revenue Trend
@@ -125,7 +126,8 @@ Before analysis, the raw dataset was cleaned in Excel:
 
 ### 🔹 Page 2 — Customer Intelligence
 
-![Page 2](Page_2.png)
+<img width="1281" height="716" alt="Page 2" src="https://github.com/user-attachments/assets/0795a462-3677-45a4-add7-bccd38a3c0e1" />
+
 
 - Average Order Value (AOV)
 - Customer Lifetime Value (CLV)
