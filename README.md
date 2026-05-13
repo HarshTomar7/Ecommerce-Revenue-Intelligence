@@ -109,8 +109,8 @@ clear insights into:
 
 ### 🔹 Page 1 — Business Performance
 
-<<<<<<< HEAD
-![Page 1]
+<img width="1292" height="692" alt="page_1" src="https://github.com/user-attachments/assets/956d8c44-77af-4bfa-b9cc-48e051b725f2" />
+
 
 **KPI Cards**
 - Total Revenue: **$7.12M**
@@ -133,8 +133,8 @@ clear insights into:
 
 ### 🔹 Page 2 — Customer Intelligence
 
-<<<<<<< HEAD
-![Page 2]
+<img width="1271" height="719" alt="page_2" src="https://github.com/user-attachments/assets/f0313a4d-6392-4b99-9603-d0c630a08471" />
+
 
 **KPI Cards**
 - Repeat Customer Rate: **56.02%**
