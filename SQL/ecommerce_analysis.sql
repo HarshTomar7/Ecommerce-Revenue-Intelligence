@@ -294,65 +294,43 @@ FROM customer_orders;
 -- =========================
 
 -- 1. Payment Behavior
--- No single dominant payment method; all six methods share ~15-17% of transactions equally.
--- COD leads slightly (8,522 txns, $146 avg) but the difference is marginal.
--- Indicates customers value payment flexibility — no method should be removed.
--- COD carries hidden operational costs (failed deliveries, returns) despite its high usage;
--- incentivising a shift to prepaid digital methods would improve margins.
+-- All payment methods are used almost equally.
+-- COD is slightly higher, but it also increases return and delivery risk.
+-- Keep all options, but promote prepaid payments.
 
 -- 2. Customer Demographics
--- Adults (25-45) dominate with 6,139 customers, 32,103 orders and $4.6M revenue (64.7%).
--- All three age groups have nearly identical AOV: Adult $143, Young $141, Senior $140.
--- Spending differences come from frequency and customer count, not spend per order.
--- Young customers (18-24) are the smallest group but show higher order frequency
--- than Seniors — highest long-term CLV potential if retained early.
+-- Adults aged 25-45 bring the most orders and revenue.
+-- AOV is almost the same across all age groups.
+-- Young customers have good long-term potential.
 
 -- 3. Geographic Performance
--- USA leads in revenue ($1.30M, 18.2%) followed by India ($1.04M, 14.6%).
--- UK ($150.87 avg) and Germany ($149.67 avg) are the highest AOV markets — classified
--- as High Value Markets. No single country exceeds 18.2% revenue share.
--- Business has healthy geographic diversification with no dangerous market dependency.
--- Japan and Mexico are underpenetrated relative to their size — best Growth Market targets.
+-- USA and India generate the highest revenue.
+-- UK and Germany have the highest AOV.
+-- Japan and Mexico can be targeted for growth.
 
 -- 4. Customer Retention
--- Repeat customer rate is 56% — below the 60-70% industry benchmark.
--- 44% of customers (4,180) bought exactly once and never returned.
--- Median customer lifespan is only 22 days — half of all customers complete
--- their entire relationship with the business in under 3 weeks.
--- Converting even 10% of one-time buyers into two-time buyers would add
--- ~$500K in incremental revenue at median spend levels.
+-- Repeat customer rate is 56%, which needs improvement.
+-- Many customers buy only once.
+-- Focus on bringing one-time buyers back.
 
 -- 5. Customer Value
--- Top 20% of customers drive 70.5% of total revenue — stronger than the classic 80/20 rule.
--- Top 10% alone account for 51.8% of revenue.
--- Top customer (Grace Wagner) spent $16,616 across 42 orders — 60x the median customer ($276).
--- Business is heavily concentrated in a small loyal core; losing top customers
--- has an immediate and measurable revenue impact.
+-- Top customers generate most of the revenue.
+-- Top 20% contribute over 70% of revenue.
+-- Retaining loyal customers is very important.
 
 -- 6. Customer Segmentation
--- Champions (monetary > $1,000 AND frequency > 5): 434 customers, $1.50M revenue (21.1%).
--- New Customers (frequency = 1): 759 customers but only $109K revenue — entirely dependent
--- on whether they return for a second purchase.
--- At Risk + Lost customers combined: 6,993 customers holding $4.6M in past revenue.
--- This is the most critical finding — nearly 74% of the base has gone silent.
--- Reactivating even 15% of At Risk customers recovers ~$300K in revenue.
+-- Champions are high-value repeat buyers.
+-- New customers need to be converted into repeat buyers.
+-- Many customers are At Risk or Lost, so reactivation is needed.
 
 -- 7. Revenue Trend
--- 2023 was a strong growth year: revenue scaled from $11K (Jan) to $632K (Dec).
--- Q4 2023 peak was driven by seasonal demand — Nov +16% MoM, Dec +20% MoM.
--- 2024 shows structural decline: revenue fell every month from March ($377K) to December ($201K).
--- By December 2024 revenue is down 68% YoY vs December 2023 — this is not seasonality,
--- it is a customer acquisition problem. 2023 cohorts are ageing out faster than
--- new customers are being acquired to replace them.
+-- Revenue grew strongly in 2023.
+-- Revenue declined month by month in 2024.
+-- The main issue is weak new customer acquisition.
 
 -- 8. Product Categories
--- Electronics dominates at 37.3% of revenue ($2.66M) with the highest AOV at $427.84.
--- This is a concentration risk — one supply disruption impacts over a third of total revenue.
--- Books (3.3%, $36.92 avg) and Grocery (5.1%, $56.05 avg) drive order frequency
--- but contribute minimal revenue — they are habit-formation categories, not revenue drivers.
--- Top 2 categories (Electronics + Home & Kitchen) account for 54.2% of all revenue.
--- A healthier portfolio target would be no single category exceeding 25% share.
-
-
+-- Electronics brings the highest revenue and AOV.
+-- But high dependency on Electronics is risky.
+-- Books and Grocery help repeat orders but bring low revenue.
 
 ---------------------END----------------------------
