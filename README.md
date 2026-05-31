@@ -101,12 +101,14 @@ I labelled markets based on both revenue and average order value.
 ## Dashboard
 
 ### Page 1 — Business Performance
-![Page 1](page_1.png)
+<img width="1292" height="692" alt="page_1" src="https://github.com/user-attachments/assets/dc8d6f87-9307-40c9-8f23-802c691fc94b" />
+
 
 Shows revenue totals, monthly trend (where the 2024 decline is clearly visible), breakdown by payment method, age group, and product category.
 
 ### Page 2 — Customer Intelligence
-![Page 2](page_2.png)
+<img width="1271" height="719" alt="page_2" src="https://github.com/user-attachments/assets/98c16d73-3bd0-4564-b219-be60752b00c7" />
+
 
 Shows repeat customer rate, average order value, CLV, revenue by country, top customers table, and the key insights + recommendations.
 
