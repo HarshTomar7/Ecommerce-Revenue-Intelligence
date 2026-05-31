@@ -107,7 +107,8 @@ I labelled markets based on both revenue and average order value.
 Shows revenue totals, monthly trend (where the 2024 decline is clearly visible), breakdown by payment method, age group, and product category.
 
 ### Page 2 — Customer Intelligence
-<img width="1271" height="719" alt="page_2" src="https://github.com/user-attachments/assets/98c16d73-3bd0-4564-b219-be60752b00c7" />
+<img width="1280" height="722" alt="page_2" src="https://github.com/user-attachments/assets/2997e71e-b7a3-434a-8cd2-8c2a6897361b" />
+
 
 
 Shows repeat customer rate, average order value, CLV, revenue by country, top customers table, and the key insights + recommendations.
