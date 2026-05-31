@@ -1,238 +1,182 @@
-# 🛒 E-Commerce Revenue Intelligence Dashboard
-
-**SQL · Power BI · DAX**
-
-An end-to-end data analytics project that transforms raw e-commerce
-transaction data into actionable business insights using PostgreSQL
-and Power BI.
+# 🛒 E-Commerce Sales Analysis
+**SQL + Power BI &nbsp;|&nbsp; Harsh Singh Tomar**
 
 ---
 
-## 🚀 Project Overview
+## The Problem
 
-This project simulates a real-world retail analytics scenario where
-transaction data is analyzed to uncover customer behavior, revenue
-trends, and growth opportunities.
+An online store launched in January 2023 and had a great first year — revenue grew month after month.
 
-- **PostgreSQL** → Data extraction & advanced analysis (12 sections)
-- **Power BI + DAX** → Interactive 2-page dashboard
-- **Python** → Realistic dataset generation (power-law distribution,
-  seasonal patterns, natural churn)
+Then 2024 arrived, and something went wrong. Revenue started falling. The business needed to know:
 
----
+- **Why is revenue declining?**
+- **Are customers coming back, or buying once and leaving?**
+- **Who are the most valuable customers — and are we protecting them?**
+- **Which products and markets are actually driving growth?**
 
-## 🎯 Problem Statement
-
-E-commerce businesses generate large volumes of data but often lack
-clear insights into:
-
-- Why revenue is declining despite a large customer base
-- Which customers are at risk of churning
-- Which categories and markets drive the most value
-- How to prioritize retention vs acquisition spend
+I had 50,000 transactions from 9,500 customers across 10 countries, and tried to answer these questions with SQL and Power BI.
 
 ---
 
-## 🎯 Business Questions Solved
+## The Data
 
-1. What is the overall performance of the business?
-2. Who are the most valuable customers?
-3. Are customers loyal, at risk, or already lost?
-4. Is the business growing or declining — and why?
-5. Which categories and markets drive the most revenue?
-6. How does customer behavior vary across demographics?
+Each row is one purchase. It tells us:
+- Who bought, when, and how much they spent
+- What category they bought from and which country they're in
+- Their age group and payment method
 
----
-
-## 🧰 Tools & Technologies
-
-| Tool | Purpose |
-|------|---------|
-| **PostgreSQL** | Querying, aggregation, advanced analysis |
-| **Power BI** | Interactive dashboard & storytelling |
-| **DAX** | KPI and segment calculations |
-| **Python** | Realistic dataset generation |
+**Dataset size:** 50,000 transactions · 9,500 customers · Jan 2023 – Dec 2024 · 10 countries · 8 product categories
 
 ---
 
-## 📁 Dataset
+## What I Did — Step by Step
 
-- **50,000** transaction records
-- **9,500** unique customers
-- **Date range:** January 2023 – December 2024
-- **10 countries:** USA, India, UK, Germany, Canada, France,
-  Australia, Japan, Mexico, Brazil
-- **8 product categories:** Electronics, Clothing, Books, Beauty,
-  Sports, Home & Kitchen, Grocery, Toys
-- **6 payment methods:** Credit Card, Debit Card, UPI,
-  Cash on Delivery, PayPal, Net Banking
+### Step 1 — Headline numbers first
+Before digging into problems, I established the baseline.
 
-### Why this dataset is realistic:
-- Power-law frequency: 37% one-time buyers → 5% champions
-- Natural Q4 seasonal spikes (Nov–Dec)
-- Customer churn built in — median lifespan of 22 days
-- 2024 revenue decline reflecting real acquisition slowdown
-- Top 20% of customers drive 70.5% of revenue
+> **$7.12M revenue · 50K orders · 9,500 customers · $142 average order**
+
+These look healthy. But when you split by year, the picture changes completely.
 
 ---
 
-## 🗄️ SQL Analysis (PostgreSQL)
+### Step 2 — Is the business growing or shrinking?
+I used SQL's `LAG()` function to compare each month to the previous one.
 
-12 analytical sections covering the full business picture:
+> **2023:** Revenue grew from $11K in January to $632K in December — 57x growth in a year.
+>
+> **2024:** Revenue fell every single month. By December 2024, it was down 68% from the peak.
 
-| Section | Business Question |
-|---------|------------------|
-| A — Core KPIs | What is the overall business performance? |
-| B — CLV Proxy | Which customers generate the most revenue? |
-| C — RFM Analysis | How can we segment customers by behavior? |
-| D — Segmentation | Who are Champions, Loyal, At Risk, Lost? |
-| E — Cohort Analysis | How well do we retain customers over time? |
-| F — Monthly Growth | Is the business growing or declining? |
-| G — Category Contribution | Which categories drive revenue? |
-| H — Pareto Analysis | Do top customers drive majority of revenue? |
-| I — Payment Analysis | How do payment methods impact revenue? |
-| J — Age Group Analysis | How does spending vary across age groups? |
-| K — Country Analysis | Which markets offer the best opportunities? |
-| L — Customer Retention | What percentage of customers return? |
-
-**Key SQL techniques used:**
-- Window Functions: `LAG`, `NTILE`, `RANK`, `FIRST_VALUE`
-- CTEs (Common Table Expressions)
-- `PERCENTILE_CONT` for median calculations
-- `NULLIF` to prevent divide-by-zero errors
-- `DATE_TRUNC` for cohort logic
-
+This is not a seasonal dip. This is a structural problem. My next question: why?
 
 ---
 
-## 📊 Power BI Dashboard
+### Step 3 — Are customers coming back?
+If customers return, revenue stays stable. If most buy once and leave, the business depends entirely on new customer acquisition.
 
-### 🔹 Page 1 — Business Performance
+> **44% of customers bought only once and never came back.**
+> Repeat rate = 56%.
 
-<img width="1292" height="692" alt="page_1" src="https://github.com/user-attachments/assets/956d8c44-77af-4bfa-b9cc-48e051b725f2" />
-
-
-**KPI Cards**
-- Total Revenue: **$7.12M**
-- Total Orders: **50K**
-- Total Customers: **9,500**
-
-**Visuals**
-- Revenue by Payment Method (horizontal bar)
-  → All 6 methods nearly equal ($1.14M–$1.25M)
-- Revenue Contribution by Month (line chart, 2023–2024)
-  → Clear 2023 growth peak and 2024 decline visible
-- Revenue by Age Group (bar chart)
-  → Adult $4.6M · Senior $1.4M · Young $1.1M
-- Revenue by Product Category (donut chart)
-  → Electronics $2.66M · Home & Kitchen $1.2M · Sports $0.97M
-
-**Slicers:** Year · Country · Product Category
+This explains 2024. When new customer acquisition slowed down, there wasn't enough repeat business to make up for it. The business had been papering over a retention problem with growth.
 
 ---
 
-### 🔹 Page 2 — Customer Intelligence
+### Step 4 — Who are the most valuable customers?
+I ranked customers by total spending to find the "champion" segment.
 
-<img width="1271" height="719" alt="page_2" src="https://github.com/user-attachments/assets/f0313a4d-6392-4b99-9603-d0c630a08471" />
+> Top customer: Grace Wagner — 42 orders, $16,615 spent.
+> The top 20% of customers drive **70.5% of total revenue.**
+> The top customer spent 60x more than the median customer.
 
-
-**KPI Cards**
-- Repeat Customer Rate: **56.02%**
-- Average Order Value: **$142.47**
-- Customer Lifetime Value: **$749.85**
-
-**Visuals**
-- Revenue Contribution by Countries (bar chart)
-  → USA $1.3M · India $1.04M · UK $0.84M · Germany $0.75M
-- Top Customer Table
-  → user_name · Total Orders · Revenue per Customer
-  → Top: Grace Wagner (42 orders, $16,615)
-- Insights text panel
-- Recommendations text panel
+This is the Pareto effect in action. The business is highly dependent on a small group of loyal buyers.
 
 ---
 
-## 📊 DAX Measures Used
+### Step 5 — What are people buying?
+I looked at revenue share by product category.
 
-| Measure | Formula Logic |
+> **Electronics = 37.3% of all revenue** ($2.66M, average order $427).
+> Top 2 categories (Electronics + Home & Kitchen) = 54% of revenue.
+
+This is concentration risk. If Electronics demand drops — due to economic conditions, a competitor, or supply issues — the whole business suffers. Books and Grocery drive repeat orders but contribute little revenue individually.
+
+---
+
+### Step 6 — Which countries are strongest?
+I labelled markets based on both revenue and average order value.
+
+| Country | Revenue | Market Type |
+|---------|---------|-------------|
+| USA | $1.3M | High value |
+| India | $1.04M | High volume |
+| UK | $0.84M | High value |
+| Germany | $0.75M | High value |
+| Japan | Low | Growth opportunity |
+| Mexico | Low | Growth opportunity |
+
+> UK and Germany have higher average order values than USA and India — quality buyers worth investing in.
+
+---
+
+## Dashboard
+
+### Page 1 — Business Performance
+![Page 1](page_1.png)
+
+Shows revenue totals, monthly trend (where the 2024 decline is clearly visible), breakdown by payment method, age group, and product category.
+
+### Page 2 — Customer Intelligence
+![Page 2](page_2.png)
+
+Shows repeat customer rate, average order value, CLV, revenue by country, top customers table, and the key insights + recommendations.
+
+---
+
+## What I Found
+
+**The real problem is retention and acquisition — not the product.**
+
+| Finding | What it means |
 |---------|--------------|
-| Total Revenue | SUM(purchase_amount) |
-| Total Orders | COUNTROWS() |
-| Total Customers | DISTINCTCOUNT(user_name) |
-| Avg Order Value | Revenue / Total Orders |
-| Revenue per Customer (CLV) | Revenue / Total Customers |
-| Repeat Customers | SUMMARIZE + FILTER orders > 1 |
-| Repeat Customer Rate % | Repeat Customers / Total Customers |
+| 2024 revenue fell 68% from peak | New customer acquisition dropped sharply |
+| 44% of customers bought only once | Half the base never came back |
+| Top 20% drive 70.5% of revenue | The business rests on a very small loyal base |
+| Electronics = 37% of revenue | Heavy concentration in one category |
+| UK & Germany have highest AOV | Underinvested high-value markets |
 
 ---
 
-## 📊 Key Insights
+## What I'd Recommend
 
-1. Revenue grew from $11K (Jan 2023) to $632K (Dec 2023) but
-   collapsed 68% YoY by Dec 2024. Not seasonality — it's a
-   customer acquisition problem.
+1. **Send a follow-up email 14 days after a first order.** Converting just 10% of one-time buyers into repeat buyers adds ~$500K in revenue. Easiest win available.
 
-2. 44% of customers bought only once and never returned. Median
-   lifespan is just 22 days. Half the base is essentially
-   one-time visitors.
+2. **Investigate why new customer acquisition dropped in 2024.** Compare new customers month by month — 2023 vs 2024. The problem started somewhere specific.
 
-3. Electronics alone = 37.3% of revenue ($2.66M, AOV $427).
-   Top 2 categories drive 54.2% of all revenue —
-   heavy concentration risk.
+3. **Protect the top 200 customers.** Create a simple VIP list. No discounts needed — offer free shipping and early access. Losing 50 of them has immediate revenue impact.
 
-4. Top 20% of customers generate 70.5% of revenue. Top customer
-   spent $16,616 vs median of $276 — a 60x gap.
+4. **Grow Sports and Clothing to reduce Electronics dependency.** Target Electronics share under 30% over 12 months.
 
-5. 74% of customers are At Risk or Lost — bought before, now
-   silent. They hold $4.6M in historical revenue no longer active.
+5. **Run a win-back campaign for customers silent for 180+ days.** Even a 15% reactivation rate recovers ~$300K in dormant revenue.
 
 ---
 
-## 🚀 Recommendations
+## What I Learned
 
-1. Trigger a second-purchase email 14 days after first order.
-   Converting 10% of one-time buyers adds ~$500K in revenue.
-   Highest ROI action available.
-
-2. Investigate 2024 acquisition drop. Compare new customers
-   month-by-month 2023 vs 2024. Fix the pipeline before
-   2025 decline continues.
-
-3. Create a VIP tier for top 200 customers. No discounts —
-   reward with free shipping and early access. Losing 50 of
-   them has immediate revenue impact.
-
-4. Reduce Electronics dependency from 37.3% to under 25% by
-   growing Sports and Clothing categories.
-
-5. Win-back At Risk customers (180–365 days silent) with a
-   personalised offer. 15% reactivation = ~$300K recovered.
+- How to use `LAG()` to calculate month-over-month growth
+- How to build customer segments using `CASE WHEN` and CTEs
+- How `NTILE()` works for percentile-based segmentation (Pareto analysis)
+- How RFM thinking works — and why it's used in real retail analytics
+- How to frame data findings as a business story, not just numbers
 
 ---
 
-## 📈 Business Impact
+## What I'd Do Next
 
-- Diagnosed 2024 revenue decline as an acquisition problem,
-  not a product or retention issue
-- Quantified $4.6M dormant revenue opportunity in At Risk
-  and Lost segments
-- Proved top 20% of customers drive 70.5% of revenue
-- Identified Electronics concentration as the #1 business risk
-- Delivered clear action plan with estimated revenue impact
-  per recommendation
+- Build a proper cohort retention chart (month 0, month 1, month 2...) to see exactly when customers drop off
+- Add a funnel analysis if browsing/cart data were available
+- Try to predict which customers are "at risk" of churning using a simple score
 
 ---
 
-## 📁 Project Files
+## Tools
 
-| File | Description |
-|------|-------------|
-| `ecommerce_realistic.csv` | Realistic dataset (50K rows, 9.5K customers) |
-| `ecommerce_analysis_v2.sql` | Full SQL analysis (12 sections + insights) |
-| `E-Commerce_Dashboard.pbix` | Power BI dashboard file |
-| `page_1.png` | Dashboard — Business Performance |
-| `page_2.png` | Dashboard — Customer Intelligence |
+| Tool | Used For |
+|---|---|
+| PostgreSQL | All analysis — 10 queries covering the full story |
+| Power BI | Dashboard, charts, KPI cards |
+| DAX | Calculated measures (repeat rate, CLV, AOV) |
 
 ---
 
-*Project by Harsh Singh Tomar — Data Analyst*
+## Files
+
+```
+├── ecommerce_analysis.sql   → 10 queries that walk through the full story
+├── README.md                → This file
+├── page_1.png               → Dashboard page 1 — Business performance
+└── page_2.png               → Dashboard page 2 — Customer intelligence
+```
+
+---
+
+*Personal learning project by Harsh Singh Tomar*
