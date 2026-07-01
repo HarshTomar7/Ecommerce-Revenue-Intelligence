@@ -144,29 +144,33 @@ LIMIT 20;
 -- M = Monetary (how much they spent)
 -- Then labelled them into segments.
 
-WITH rfm AS (
-    SELECT
-        LOWER(TRIM(user_name))  AS customer_id,
-        MAX(transaction_date)   AS last_purchase,
-        COUNT(*)                AS frequency,
-        SUM(purchase_amount)    AS monetary
-    FROM ecommerce
-    GROUP BY customer_id
+WITH rfm_base AS (
+    SELECT 
+        LOWER(TRIM(user_name)) AS customer_id, 
+        MAX(transaction_date) AS last_purchase, 
+        COUNT(*) AS frequency, 
+        SUM(purchase_amount) AS monetary 
+    FROM ecommerce 
+    GROUP BY customer_id 
+),
+rfm_scores AS (
+    SELECT 
+        *,
+        NTILE(5) OVER (ORDER BY last_purchase ASC) AS r_score,
+        NTILE(5) OVER (ORDER BY frequency ASC) AS f_score,
+        NTILE(5) OVER (ORDER BY monetary ASC) AS m_score
+    FROM rfm_base
 )
-SELECT
-    customer_id,
-    last_purchase,
-    frequency,
-    ROUND(monetary, 2) AS monetary,
-    CASE
-        WHEN monetary > 1000 AND frequency > 5 THEN 'Champion'
-        WHEN monetary > 800                    THEN 'Loyal'
-        WHEN frequency = 1                     THEN 'One-time buyer'
-        WHEN last_purchase < CURRENT_DATE - INTERVAL '180 days'
-                                               THEN 'At risk'
-        ELSE                                        'Regular'
+SELECT 
+    *,
+    CASE 
+        WHEN r_score >= 4 AND f_score >= 4 AND m_score >= 4 THEN 'Champion'
+        WHEN f_score >= 4 AND m_score >= 4 THEN 'Loyal'
+        WHEN r_score <= 2 AND f_score <= 2 AND m_score <= 2 THEN 'At risk'
+        WHEN f_score = 1 THEN 'One-time buyer'
+        ELSE 'Regular' 
     END AS segment
-FROM rfm
+FROM rfm_scores
 ORDER BY monetary DESC;
 
 -- Champions = high value, high frequency → protect at all costs
@@ -178,18 +182,9 @@ ORDER BY monetary DESC;
 -- STEP 6 — Which product categories drive revenue?
 -- ============================================
 
-WITH total AS (
-    SELECT SUM(purchase_amount) AS grand_total FROM ecommerce
-)
-SELECT
-    product_category,
-    COUNT(*)                                                          AS orders,
-    ROUND(SUM(purchase_amount), 0)                                   AS revenue,
-    ROUND(AVG(purchase_amount), 2)                                   AS avg_order_value,
-    ROUND(SUM(purchase_amount) / (SELECT grand_total FROM total) * 100, 1) AS revenue_share_pct
-FROM ecommerce
-GROUP BY product_category
-ORDER BY revenue DESC;
+select product_category,count(*) as total_orders,sum(purchase_amount) as revenue,
+avg(purchase_amount) as average_order_value,sum(purchase_amount) / (select sum(purchase_amount) from ecommerce) * 100 as
+perc from ecommerce group by product_category order by revenue desc
 
 -- Electronics = 37.3% of all revenue ($2.66M, AOV $427).
 -- Top 2 categories (Electronics + Home & Kitchen) = 54% of revenue.
@@ -278,10 +273,11 @@ SELECT
     COUNT(*)                            AS customers,
     ROUND(SUM(total_spent), 0)          AS revenue,
     ROUND(SUM(total_spent) * 100.0
-          / SUM(SUM(total_spent)) OVER (), 1) AS revenue_share_pct
+          / (select sum(total_spent) from ranked), 1) AS revenue_share_pct
 FROM ranked
 GROUP BY quintile
 ORDER BY quintile;
+
 
 -- Quintile 1 (top 20%) drives 70.5% of revenue.
 -- This confirms the Pareto effect — most revenue comes from very few customers.
