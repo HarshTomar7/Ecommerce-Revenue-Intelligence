@@ -1,5 +1,5 @@
 # 🛒 E-Commerce Sales Analysis
-**Excel &nbsp;|&nbsp; Harsh Singh Tomar**
+**Excel; Harsh Singh Tomar**
 
 ---
 
